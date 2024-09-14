@@ -1,7 +1,6 @@
-INDEX	NAME
- 1		&X
- 2		&Y
- 3		&REG1
- 4		&A
- 5		&B
- 6		&REG2
+&X	
+&Y	
+&REG1	AREG
+&A	
+&B	
+&REG2	BREG

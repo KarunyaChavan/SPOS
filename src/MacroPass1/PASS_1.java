@@ -1,9 +1,10 @@
 package MacroPass1;
 import java.io.*;
 class arglist {
-	String argname;
+	String argname,value;
 	arglist(String argument) {
 		this.argname=argument;
+		this.value="";
 	}
 }
 
@@ -16,6 +17,12 @@ class mnt {
 		this.name=nm;
 		this.addr=address;
 		this.arg_cnt=0;
+	}
+	mnt(String nm, int address,int total_arg)
+	{
+		this.name=nm;
+		this.addr=address;
+		this.arg_cnt=total_arg;
 	}
 }
 
@@ -63,22 +70,26 @@ public class PASS_1 {
 	 				if(macro_start)
 		 			{
 		 				MNT[mnt_cnt++]=new mnt(words[i],mdt_cnt);
+						System.out.println(mnt_cnt);
 		 				macro_start=false;
 		 				fill_arglist=true;
 		 			}
 		 			if(fill_arglist)
 		 			{
-		 				while(i<words.length)
-		 				{
+		 				while(i<words.length) {
+							if(words[i].equals("=")){
+								ARGLIST[arglist_cnt-1].value = words[i+1];
+							}
+							if (words[i].matches("&[a-zA-Z]+") || words[i].matches("&[a-zA-Z]+[0-9]+")) {
 
-		 					if(words[i].matches("&[a-zA-Z]+")||words[i].matches("&[a-zA-Z]+[0-9]+")) {
-								if(first) {
+								if (first) {
 									MDT[mdt_cnt].stmnt += "\t" + words[i];
 									first = false;
-								}
-								else MDT[mdt_cnt].stmnt += "\t," + words[i];
+								} else MDT[mdt_cnt].stmnt += "\t," + words[i];
 								ARGLIST[arglist_cnt++] = new arglist(words[i]);
+								MNT[mnt_cnt - 1].arg_cnt++;
 							}
+
 						    else MDT[mdt_cnt].stmnt = MDT[mdt_cnt].stmnt+ "\t" + words[i];
 							stmnt +="\t"+ words[i];
 		 					i++;
@@ -111,28 +122,25 @@ public class PASS_1 {
 	 	br1.close();
 		bw1.close();
 		BufferedWriter bw = new BufferedWriter(new FileWriter("src\\MacroPass1\\MNT.txt"));
-		bw.write("INDEX\tNAME\tMDTC\n");
 		for(int i=0;i<mnt_cnt;i++)
 		{
-			bw.write(" "+(i+1)+"\t\t"+MNT[i].name+"\t"+MNT[i].addr+"\n");
+			bw.write(MNT[i].name+"\t"+MNT[i].addr+"\t"+MNT[i].arg_cnt+"\n");
 		}
 		bw.close();
 
 		
 		bw1=new BufferedWriter(new FileWriter("src\\MacroPass1\\ARG.txt"));
-		bw1.write("INDEX\tNAME\n");
 		for(int i=0;i<arglist_cnt;i++)
 		{
-			bw1.write(" "+(i+1)+"\t\t"+ARGLIST[i].argname+"\n");
+			bw1.write(ARGLIST[i].argname+"\t"+ARGLIST[i].value + "\n");
 		}
 		bw1.close();
 
 		bw1=new BufferedWriter(new FileWriter("src\\MacroPass1\\MDT.txt"));
-		bw1.write("INDEX\t\tSTATEMENT\n");
 
 		for(int i=0;i<mdt_cnt;i++)
 		{
-			bw1.write(" "+(i+1)+"\t\t"+MDT[i].stmnt+"\n");
+			bw1.write(MDT[i].stmnt+"\n");
 		}
 		bw1.close();
 	}
