@@ -1,4 +1,4 @@
-package FCFS;
+package Scheduling.FCFS;
 import java.util.*;
 
 class Process{

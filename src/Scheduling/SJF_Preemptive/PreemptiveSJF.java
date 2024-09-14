@@ -1,4 +1,4 @@
-package SJF_Preemptive;
+package Scheduling.SJF_Preemptive;
 import java.util.Scanner;
 public class PreemptiveSJF {
     public static void main(String[] args) {
