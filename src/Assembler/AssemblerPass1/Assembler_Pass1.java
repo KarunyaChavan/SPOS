@@ -1,4 +1,4 @@
-package AssemblerPass1;
+package Assembler.AssemblerPass1;
 import java.io.*; //Import classes regarding file operations
 import java.util.ArrayList;
 
@@ -57,8 +57,8 @@ public class Assembler_Pass1 {
         String line;
 
         try{
-            BufferedReader br = new BufferedReader(new FileReader("src\\AssemblerPass1\\sample.txt"));
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src\\AssemblerPass1\\OutputTextTry.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("src\\Assembler.AssemblerPass1\\sample.txt"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src\\Assembler.AssemblerPass1\\OutputTextTry.txt"));
             Boolean start = false, end = false, ltorg = false, fill_addr = false,flag=false;
             int total_symb=0,total_ltr=0,optab_cnt=0,pooltab_cnt=0,loc=0,temp,pos,d;
 
@@ -245,13 +245,13 @@ public class Assembler_Pass1 {
             br.close();
             bw.close();
 
-            BufferedWriter sw = new BufferedWriter(new FileWriter("src\\AssemblerPass1\\symTab.txt"));
+            BufferedWriter sw = new BufferedWriter(new FileWriter("src\\Assembler.AssemblerPass1\\symTab.txt"));
             sw.write("\nSYMBOL\tADDRESS\n");
             for(int i=0;i<total_symb;i++)
                 sw.write(symbol_table[i].name+"\t\t"+symbol_table[i].address+"\n");
             sw.close();
 
-            BufferedWriter lw = new BufferedWriter(new FileWriter("src\\AssemblerPass1\\litTab.txt"));
+            BufferedWriter lw = new BufferedWriter(new FileWriter("src\\Assembler.AssemblerPass1\\litTab.txt"));
             lw.write("\nIndex\tLITERAL\tADDRESS\n");
             for(int i=0;i<total_ltr;i++)
             {
@@ -261,13 +261,13 @@ public class Assembler_Pass1 {
             }
             lw.close();
 
-            BufferedWriter pw = new BufferedWriter(new FileWriter("src\\AssemblerPass1\\poolTab.txt"));
+            BufferedWriter pw = new BufferedWriter(new FileWriter("src\\Assembler.AssemblerPass1\\poolTab.txt"));
             pw.write("\nPOOL\tTOTAL LITERALS\n");
             for(int i=0;i<pooltab_cnt;i++)
                 pw.write(poolTab[i].first+"\t"+poolTab[i].total_literals+"\n");
             pw.close();
 
-            BufferedWriter mw = new BufferedWriter(new FileWriter("src\\AssemblerPass1\\opTab.txt"));
+            BufferedWriter mw = new BufferedWriter(new FileWriter("src\\Assembler.AssemblerPass1\\opTab.txt"));
             mw.write("\nMNEMONIC\tOPCODE\n");
             for(int i=0;i<optab_cnt;i++)
                 mw.write(op_table[i].name+"\t\t"+op_table[i].address+"\n");

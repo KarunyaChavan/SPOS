@@ -1,4 +1,4 @@
-package AssemblerPass2;
+package Assembler.AssemblerPass2;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,9 +11,9 @@ public class Main
 {
     public static void main(String[] Args) throws IOException
     {
-        BufferedReader b1 = new BufferedReader(new FileReader("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\AssemblerPass2\\intermediate.txt"));
-        BufferedReader b2 = new BufferedReader(new FileReader("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\AssemblerPass2\\symtab.txt"));
-        BufferedReader b3 = new BufferedReader(new FileReader("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\AssemblerPass2\\littab.txt"));
+        BufferedReader b1 = new BufferedReader(new FileReader("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\Assembler.AssemblerPass2\\intermediate.txt"));
+        BufferedReader b2 = new BufferedReader(new FileReader("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\Assembler.AssemblerPass2\\symtab.txt"));
+        BufferedReader b3 = new BufferedReader(new FileReader("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\Assembler.AssemblerPass2\\littab.txt"));
         FileWriter f1 = new FileWriter("Pass2.txt");
         HashMap<Integer, String> symSymbol = new HashMap<Integer, String>();
         HashMap<Integer, String> litSymbol = new HashMap<Integer, String>();

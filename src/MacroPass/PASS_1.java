@@ -1,4 +1,4 @@
-package MacroPass1;
+package MacroPass;
 import java.io.*;
 class arglist {
 	String argname,value;
@@ -37,8 +37,8 @@ class mdt {
 public class PASS_1 {
 
 	public static void main(String[] args) throws IOException {
-		BufferedReader br1=new BufferedReader(new FileReader("src\\MacroPass1\\input.txt"));
-		BufferedWriter bw1=new BufferedWriter(new FileWriter("src\\MacroPass1\\Output1.txt"));
+		BufferedReader br1=new BufferedReader(new FileReader("src\\MacroPass\\input.txt"));
+		BufferedWriter bw1=new BufferedWriter(new FileWriter("src\\MacroPass\\Output1.txt"));
 	 	String line;
 	 	mdt[] MDT=new mdt[20];
 	 	mnt[] MNT=new mnt[4];
@@ -121,7 +121,7 @@ public class PASS_1 {
 	 	}
 	 	br1.close();
 		bw1.close();
-		BufferedWriter bw = new BufferedWriter(new FileWriter("src\\MacroPass1\\MNT.txt"));
+		BufferedWriter bw = new BufferedWriter(new FileWriter("src\\MacroPass\\MNT.txt"));
 		for(int i=0;i<mnt_cnt;i++)
 		{
 			bw.write(MNT[i].name+"\t"+MNT[i].addr+"\t"+MNT[i].arg_cnt+"\n");
@@ -129,14 +129,14 @@ public class PASS_1 {
 		bw.close();
 
 		
-		bw1=new BufferedWriter(new FileWriter("src\\MacroPass1\\ARG.txt"));
+		bw1=new BufferedWriter(new FileWriter("src\\MacroPass\\ARG.txt"));
 		for(int i=0;i<arglist_cnt;i++)
 		{
 			bw1.write(ARGLIST[i].argname+"\t"+ARGLIST[i].value + "\n");
 		}
 		bw1.close();
 
-		bw1=new BufferedWriter(new FileWriter("src\\MacroPass1\\MDT.txt"));
+		bw1=new BufferedWriter(new FileWriter("src\\MacroPass\\MDT.txt"));
 
 		for(int i=0;i<mdt_cnt;i++)
 		{

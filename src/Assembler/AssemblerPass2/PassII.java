@@ -1,4 +1,4 @@
-package AssemblerPass2;
+package Assembler.AssemblerPass2;
 
 import java.io.*;
 import java.util.*;
@@ -6,9 +6,9 @@ import java.util.*;
 public class PassII {
     public static void main(String[] args) throws IOException {
         //Creating file object to read data from 3 txt files
-        BufferedReader br = new BufferedReader(new FileReader("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\AssemblerPass2\\intermediate.txt"));
-        BufferedReader b2 = new BufferedReader(new FileReader("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\AssemblerPass2\\symtab.txt"));
-        BufferedReader b3 = new BufferedReader(new FileReader("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\AssemblerPass2\\littab.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\Assembler.AssemblerPass2\\intermediate.txt"));
+        BufferedReader b2 = new BufferedReader(new FileReader("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\Assembler.AssemblerPass2\\symtab.txt"));
+        BufferedReader b3 = new BufferedReader(new FileReader("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\Assembler.AssemblerPass2\\littab.txt"));
 
         //Creating file writer object
         FileWriter fw = new FileWriter("P2.txt");

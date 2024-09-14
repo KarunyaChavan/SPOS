@@ -1,4 +1,4 @@
-package MacroPass1;
+package MacroPass;
 import java.io.*;
 
 
@@ -14,7 +14,7 @@ public class MacroPass_2 {
         int macro_call = -1;
         int mdt_cnt=0,mnt_cnt=0,formal_arglist_cnt=0,actual_arglist_cnt=0,temp_cnt=0,temp_cnt1=0;
 
-        BufferedReader br1=new BufferedReader(new FileReader("src\\MacroPass1\\MNT.txt"));
+        BufferedReader br1=new BufferedReader(new FileReader("src\\MacroPass\\MNT.txt"));
         String line;
         while((line = br1.readLine())!=null)
         {
@@ -27,7 +27,7 @@ public class MacroPass_2 {
         for(int i=0;i<mnt_cnt;i++)
             System.out.println("\t"+i+"\t\t"+MNT[i].name+"\t\t"+MNT[i].addr+"\t\t"+MNT[i].arg_cnt);
 
-        br1=new BufferedReader(new FileReader("src\\MacroPass1\\ARG.txt"));
+        br1=new BufferedReader(new FileReader("src\\MacroPass\\ARG.txt"));
         while((line = br1.readLine())!=null)
         {
             String[] parameters=line.split("\\s+");
@@ -42,7 +42,7 @@ public class MacroPass_2 {
         for(int i=0;i<formal_arglist_cnt;i++)
             System.out.println("\t"+i+"\t"+formal_parameter[i].argname+"\t"+formal_parameter[i].value);
 
-        br1=new BufferedReader(new FileReader("src\\MacroPass1\\MDT.txt"));
+        br1=new BufferedReader(new FileReader("src\\MacroPass\\MDT.txt"));
         while((line = br1.readLine())!=null)
         {
             MDT[mdt_cnt]=new mdt();
@@ -55,9 +55,9 @@ public class MacroPass_2 {
         for(int i=0;i<mdt_cnt;i++)
             System.out.println("\t"+i+"\t"+MDT[i].stmnt);
 
-        br1=new BufferedReader(new FileReader("src\\MacroPass1\\input.txt"));
+        br1=new BufferedReader(new FileReader("src\\MacroPass\\input.txt"));
         arglist[] actual_parameter=new arglist[10];
-        BufferedWriter bw1 = new BufferedWriter(new FileWriter("src\\MacroPass1\\Output.txt"));
+        BufferedWriter bw1 = new BufferedWriter(new FileWriter("src\\MacroPass\\Output.txt"));
         while((line = br1.readLine())!=null)
         {
             line=line.replaceAll(",", " ");
