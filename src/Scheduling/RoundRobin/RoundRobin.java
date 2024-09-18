@@ -1,71 +1,110 @@
 package Scheduling.RoundRobin;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
+
+class Process {
+    String id;
+    int arrival_time;
+    int burst_time;
+    int remaining_bt;
+    int completion_time;
+    int turnaround_time;
+    int waiting_time;
+    boolean is_completed;
+
+    Process(String pid, int at, int bt) {
+        id = pid;
+        arrival_time = at;
+        burst_time = bt;
+        remaining_bt = bt; // Remaining burst time is initially equal to burst time
+        is_completed = false;
+    }
+}
+
 public class RoundRobin {
-    public static void main(String args[]) {
-        int n, i, qt, count = 0, temp, sq = 0, at[], bt[], ct[], tat[], wt[], rem_bt[];
-        at = new int[10];
-        bt = new int[10];
-        ct = new int[10];
-        tat = new int[10];
-        wt = new int[10];
-        rem_bt = new int[10];
-        try (Scanner s = new Scanner(System.in)) {
-            System.out.print("Enter the number of process (maximum 10) = ");
-            n = s.nextInt();
-            System.out.print("Enter the burst time and arrival time of the process\n");
-            for (i = 0; i < n; i++) {
-                System.out.print("P" + i + " (Arrival Time) = ");
-                at[i] = s.nextInt();
-                System.out.print("P" + i + " (Burst Time) = ");
-                bt[i] = s.nextInt();
-                rem_bt[i] = bt[i];
-            }
-            System.out.print("Enter the quantum time: ");
-            qt = s.nextInt();
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter the number of processes (maximum 10): ");
+        int n = sc.nextInt();
+        Process[] process_queue = new Process[n];
+
+        System.out.println("Enter the Arrival Time and Burst Time for each process:");
+        for (int i = 0; i < n; i++) {
+            System.out.print("P" + (i + 1) + " (Arrival Time): ");
+            int at = sc.nextInt();
+            System.out.print("P" + (i + 1) + " (Burst Time): ");
+            int bt = sc.nextInt();
+            process_queue[i] = new Process("P" + (i + 1), at, bt);
         }
-        while (true) {
-            for (i = 0, count = 0; i < n; i++) {
-                if (rem_bt[i] <= 0) {
-                    count++;
-                    continue;
+
+        System.out.print("Enter the quantum time: ");
+        int quantum_time = sc.nextInt();
+
+        // Sort processes by arrival time
+        Arrays.sort(process_queue, Comparator.comparingInt(p -> p.arrival_time));
+
+        // Initialize variables
+        int current_time = 0;  // Tracks the current time
+        int completed = 0;     // Number of completed processes
+        int total_tat = 0, total_wt = 0;  // Total Turnaround Time and Waiting Time
+
+        // Process execution using Round Robin
+        while (completed < n) {
+            boolean process_executed = false;
+
+            for (int i = 0; i < n; i++) {
+                Process p = process_queue[i];
+
+                // Process can execute only if it's arrived and not yet completed
+                if (p.arrival_time <= current_time && !p.is_completed) {
+                    process_executed = true;
+
+                    // If remaining burst time is more than quantum time, execute for quantum time
+                    if (p.remaining_bt > quantum_time) {
+                        current_time += quantum_time;
+                        p.remaining_bt -= quantum_time;
+                    } else {
+                        // Process completes in this round
+                        current_time += p.remaining_bt;
+                        p.remaining_bt = 0;
+                        p.completion_time = current_time;
+
+                        // Calculate turnaround time and waiting time
+                        p.turnaround_time = p.completion_time - p.arrival_time;
+                        p.waiting_time = p.turnaround_time - p.burst_time;
+
+                        total_tat += p.turnaround_time;
+                        total_wt += p.waiting_time;
+
+                        p.is_completed = true; // Mark process as completed
+                        completed++;
+                    }
                 }
-                temp = Math.min(qt, rem_bt[i]);
-                rem_bt[i] -= temp;
-                sq += temp;
-                wt[i] += (sq - at[i]) - bt[i];
             }
-            if (count == n)
-                break;
+
+            // If no process was executed, advance time to the next arriving process
+            if (!process_executed) {
+                current_time++;
+            }
         }
-        calculateTAT(at, bt, ct, tat, n);
-        calculateWT(at, bt, ct, tat, wt, n);
-        System.out.print("-------------------------------------------------------------------------------------------------------------------");
-        System.out.print("\nProcess\t\tArrival Time\tBurst Time\tCompletion Time\t\tTurnaround Time\t\tWaiting Time\n");
-        System.out.print("-------------------------------------------------------------------------------------------------------------------");
-        for (i = 0; i < n; i++) {
-            System.out.print("\n " + (i + 1) + "\t\t" + at[i] + "\t\t" + bt[i] + "\t\t" + ct[i] + "\t\t\t" + tat[i] + "\t\t\t" + wt[i] + "\n");
-        }
-        float atat = calculateAverage(tat, n);
-        float awt = calculateAverage(wt, n);
-        System.out.println("Average Turnaround Time (ATAT) = " + atat);
-        System.out.println("Average Waiting Time (AWT) = " + awt);
-    }
-    private static void calculateTAT(int[] at, int[] bt, int[] ct, int[] tat, int n) {
+
+        // Display process information
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
+        System.out.println("Process\t\tArrival Time\tBurst Time\tCompletion Time\t\tTurnaround Time\t\tWaiting Time");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
+
         for (int i = 0; i < n; i++) {
-            ct[i] = at[i] + bt[i];
-            tat[i] = ct[i] - at[i];
+            Process p = process_queue[i];
+            System.out.println(p.id + "\t\t" + p.arrival_time + "\t\t" + p.burst_time + "\t\t" + p.completion_time +
+                    "\t\t" + p.turnaround_time + "\t\t\t" + p.waiting_time);
         }
-    }
-    private static void calculateWT(int[] at, int[] bt, int[] ct, int[] tat, int[] wt, int n) {
-        for (int i = 0; i < n; i++) {
-            wt[i] = tat[i] - bt[i];
-        }
-    }
-    private static float calculateAverage(int[] arr, int n) {
-        float sum = 0;
-        for (int i = 0; i < n; i++) {
-            sum += arr[i];
-        }
-        return sum / n;
+
+        // Calculate and display average turnaround time and waiting time
+        System.out.println("\nAverage Turnaround Time = " + (float) total_tat / n);
+        System.out.println("Average Waiting Time = " + (float) total_wt / n);
+
+        sc.close();
     }
 }
