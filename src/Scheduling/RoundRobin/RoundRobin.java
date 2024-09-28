@@ -97,8 +97,7 @@ public class RoundRobin {
 
         for (int i = 0; i < n; i++) {
             Process p = process_queue[i];
-            System.out.println(p.id + "\t\t" + p.arrival_time + "\t\t" + p.burst_time + "\t\t" + p.completion_time +
-                    "\t\t" + p.turnaround_time + "\t\t\t" + p.waiting_time);
+            System.out.print("\n  " + process_queue[i].id + "\t\t\t" + process_queue[i].arrival_time + "\t\t\t\t" + process_queue[i].burst_time + "\t\t\t\t" + process_queue[i].completion_time + " \t\t\t\t" + process_queue[i].turnaround_time + "\t\t\t\t\t" + process_queue[i].waiting_time + "\n");
         }
 
         // Calculate and display average turnaround time and waiting time

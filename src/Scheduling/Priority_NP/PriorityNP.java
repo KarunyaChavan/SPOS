@@ -9,8 +9,7 @@ class Process {
     int completion_time;
     int turn_around_time;
     int waiting_time;
-
-    Process() {}
+    boolean isCompleted = false;
 
     Process(String pid, int ar, int br, int pr) {
         id = pid;
@@ -41,51 +40,54 @@ public class PriorityNP {
             process_queue[i] = new Process(pid, ar, br, pr);
         }
 
-        // Sort processes based on priority (lower number -> higher priority)
-        for (int i = 0; i < n; i++) {
-            int pos = i;
-            for (int j = i + 1; j < n; j++) {
-                if (process_queue[j].priority < process_queue[pos].priority) {
-                    pos = j;
-                }
-            }
-            Process temp = process_queue[i];
-            process_queue[i] = process_queue[pos];
-            process_queue[pos] = temp;
-        }
+        // Sort processes based on arrival time
+        Arrays.sort(process_queue, Comparator.comparingInt(p -> p.arrival_time));
 
-        // Calculate completion, turnaround, and waiting times
+        int currentTime = 0;
+        int completedProcesses = 0;
         float total_tat = 0, total_wt = 0;
-        for (int i = 0; i < n; i++) {
-            if (i == 0) {
-                process_queue[i].completion_time = process_queue[i].arrival_time + process_queue[i].burst_time;
-            } else {
-                if (process_queue[i].arrival_time > process_queue[i - 1].completion_time) {
-                    process_queue[i].completion_time = process_queue[i].arrival_time + process_queue[i].burst_time;
-                } else {
-                    process_queue[i].completion_time = process_queue[i - 1].completion_time + process_queue[i].burst_time;
+
+        // Continue until all processes are completed
+        while (completedProcesses < n) {
+            // Find process with highest priority from arrived processes
+            Process currentProcess = null;
+            int highestPriority = Integer.MAX_VALUE;
+
+            for (Process p : process_queue) {
+                if (!p.isCompleted && p.arrival_time <= currentTime && p.priority < highestPriority) {
+                    highestPriority = p.priority;
+                    currentProcess = p;
                 }
             }
-            process_queue[i].turn_around_time = process_queue[i].completion_time - process_queue[i].arrival_time;
-            process_queue[i].waiting_time = process_queue[i].turn_around_time - process_queue[i].burst_time;
 
-            total_tat += process_queue[i].turn_around_time;
-            total_wt += process_queue[i].waiting_time;
+            if (currentProcess != null) {
+                // Process found, execute it
+                currentProcess.completion_time = currentTime + currentProcess.burst_time;
+                currentProcess.turn_around_time = currentProcess.completion_time - currentProcess.arrival_time;
+                currentProcess.waiting_time = currentProcess.turn_around_time - currentProcess.burst_time;
+
+                total_tat += currentProcess.turn_around_time;
+                total_wt += currentProcess.waiting_time;
+                currentProcess.isCompleted = true;
+
+                completedProcesses++;
+                currentTime = currentProcess.completion_time;
+            } else {
+                // If no process is ready, increment time
+                currentTime++;
+            }
         }
 
         // Print process details
         System.out.print("-------------------------------------------------------------------------------------------------------------------");
-        System.out.print("\nProcess\t\tArrival Time\tBurst Time\tPriority\tCompletion Time\t\tTurnaround Time\t\tWaiting Time\n");
+        System.out.print("\nProcess\t\tArrival Time\tBurst Time\tCompletion Time\t\tTurnaround Time\t\tWaiting Time\n");
         System.out.print("-------------------------------------------------------------------------------------------------------------------");
-        for (int i = 0; i < n; i++) {
-            System.out.println("\n  " + process_queue[i].id + "\t\t" + process_queue[i].arrival_time + "\t\t" + process_queue[i].burst_time +
-                    "\t\t" + process_queue[i].priority + "\t\t" + process_queue[i].completion_time + "\t\t\t" + process_queue[i].turn_around_time +
-                    "\t\t\t" + process_queue[i].waiting_time);
+        for(int  i = 0 ; i< n; i++)
+        {
+            System.out.print("\n  " + process_queue[i].id + "\t\t\t" + process_queue[i].arrival_time + "\t\t\t\t" + process_queue[i].burst_time + "\t\t\t\t" + process_queue[i].completion_time + " \t\t\t\t" + process_queue[i].turn_around_time + "\t\t\t\t\t" + process_queue[i].waiting_time + "\n");
         }
-
-        // Print average times
-        System.out.println("Average Turn Around Time = " + (total_tat / n));
         System.out.println("Average Waiting Time = " + (total_wt / n));
+        System.out.println("Average Turn Around Time = " + (total_tat / n));
 
         sc.close();
     }
