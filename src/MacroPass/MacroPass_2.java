@@ -40,7 +40,7 @@ public class MacroPass_2 {
         System.out.println("\n\n\t********FORMAL ARGUMENT LIST**********");
         System.out.println("\n\tINDEX\tNAME\tADDRESS");
         for(int i=0;i<formal_arglist_cnt;i++)
-            System.out.println("\t"+i+"\t"+formal_parameter[i].argname+"\t"+formal_parameter[i].value);
+            System.out.println("\t"+i+"\t\t"+formal_parameter[i].argname+"\t"+formal_parameter[i].value);
 
         br1=new BufferedReader(new FileReader("src\\MacroPass\\MDT.txt"));
         while((line = br1.readLine())!=null)
@@ -120,7 +120,6 @@ public class MacroPass_2 {
 
                         for(String temp:temp_tokens)
                         {
-                            System.out.println("temps = "+temp);
                             if(temp.matches("#[0-9]+") || temp.matches(",#[0-9]+"))
                             {
                                 int num = Integer.parseInt(temp.replaceAll("[^0-9]+", ""));

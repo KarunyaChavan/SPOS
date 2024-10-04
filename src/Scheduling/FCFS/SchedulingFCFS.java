@@ -25,7 +25,8 @@ public class SchedulingFCFS {
         Process[] process_queue = new Process[n];
         Process temp = new Process();
         String pid;
-        int ar,br,avgwt=0,avgtat=0;
+        int ar,br;
+        float avgwt=0,avgtat=0;
         for(int i=0;i<n;i++){
             System.out.print("Enter ID for Process " + (i+1) + " : ");
             pid = sc.next();
