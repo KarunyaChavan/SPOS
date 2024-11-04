@@ -23,18 +23,21 @@ class Pooltable{
 
 public class Assembler_Pass1 {
     //Define a function to search keywords from Symbol table and literal table
+    //1) For searching from predefined MOT
     public static int search(String token, String[] list) {
         for(int i=0;i<list.length;i++)
             if(token.equalsIgnoreCase(list[i]))
                 return i;
         return -1;
     }
+    //2) For processing for DL statements.
     public static int search(String token, ArrayList<String> list) {
         for(int i=0;i<list.size();i++)
             if(token.equalsIgnoreCase(list.get(i)))
                 return i;
         return -1;
     }
+    //3) For searching in Symbol Table
     public static int search(String token, Tables[] list, int cnt) {
         for(int i=0;i<cnt;i++)
             if(token.equalsIgnoreCase(list[i].name))
@@ -59,7 +62,7 @@ public class Assembler_Pass1 {
         try{
             BufferedReader br = new BufferedReader(new FileReader("src\\Assembler\\AssemblerPass1\\sample.txt"));
             BufferedWriter bw = new BufferedWriter(new FileWriter("src\\Assembler\\AssemblerPass1\\OutputTextTry.txt"));
-            Boolean start = false, end = false, ltorg = false, fill_addr = false,flag=false;
+            Boolean start = false, end = false, ltorg = false,flag=false;
             int total_symb=0,total_ltr=0,optab_cnt=0,pooltab_cnt=0,loc=0,temp,pos,d;
 
             //Start reading ALP source code
@@ -68,7 +71,7 @@ public class Assembler_Pass1 {
                 System.out.println(line);
                 //Spilt words in each line of source program.
                 String[] words = line.split(" ");
-                ltorg = fill_addr = false;
+                ltorg = false;
                 //STEP 3 - Location Counter Processing.
                 if (loc != 0 && !ltorg) {
                     //STEP 3.1 - As no locations are processed for Assembler Directives,we just print that LC block as blank.
@@ -179,7 +182,6 @@ public class Assembler_Pass1 {
                             if (pos != -1) {
                                 bw.write("\t(DL," + (pos + 1) + ")");
                                 op_table[optab_cnt++] = new Tables(words[i], pos+1);
-                                fill_addr = true;
                             }
                             //STEP 7 - (IMP) SYMBOL PROCESSING.
                             //STEP 7.1 - Check label field of source code by  checking i==0 or not and has any symbol.
@@ -209,8 +211,6 @@ public class Assembler_Pass1 {
                                         System.out.println(already_processed);
                                         pos = search(words[i], already_processed);
                                     }
-//                                    bw.write("\t(S," + total_symb + ")"); //Write its intermediate code
-//                                    pos = total_symb;
                                 }
                             }
                             else if(words[i].matches("[a-zA-Z]+") && r==-1){

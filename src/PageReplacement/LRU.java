@@ -34,11 +34,13 @@ public class LRU {
         System.out.println();
         for(int i = 0; i < ref_len; i++)
         {
+            //Noteable change in this algo
             if(stack.contains(reference[i]))
             {
-             stack.remove(stack.indexOf(reference[i]));
+                stack.remove(stack.indexOf(reference[i]));
             }
             stack.add(reference[i]);
+
             int search = -1;
             for(int j = 0; j < frames; j++)
             {
@@ -67,14 +69,14 @@ public class LRU {
                         }
                     }
              }
-                buffer[pointer] = reference[i];
-                fault++;
-                pointer++;
-                if(pointer == frames)
-                {
+            buffer[pointer] = reference[i];
+            fault++;
+            pointer++;
+            if(pointer == frames)
+            {
                  pointer = 0;
                  isFull = true;
-                }
+            }
             }
             for(int j = 0; j < frames; j++)
                 mem_layout[i][j] = buffer[j];

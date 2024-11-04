@@ -42,9 +42,6 @@ public class RoundRobin {
         System.out.print("Enter the quantum time: ");
         int quantum_time = sc.nextInt();
 
-        // Sort processes by arrival time
-        Arrays.sort(process_queue, Comparator.comparingInt(p -> p.arrival_time));
-
         // Initialize variables
         int current_time = 0;  // Tracks the current time
         int completed = 0;     // Number of completed processes

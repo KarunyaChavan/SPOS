@@ -1,3 +1,4 @@
+package PageReplacement;
 import java.io.*;
 public class FIFO {
     public static void main(String[] args) throws IOException 
@@ -28,27 +29,29 @@ public class FIFO {
         System.out.println();
         for(int i = 0; i < ref_len; i++)
         {
-         int search = -1;
-         for(int j = 0; j < frames; j++)
-        {
-          if(buffer[j] == reference[i])
-          {
-           search = j;
-           hit++;
-           break;
-          } 
-        }
-        if(search == -1)
-        {
-          buffer[pointer] = reference[i];
-          fault++;
-          pointer++;
-          if(pointer == frames)
-           pointer = 0;
-        }
+             int search = -1;
+             for(int j = 0; j < frames; j++)
+            {
+                //hit condition
+              if(buffer[j] == reference[i])
+              {
+               search = j;
+               hit++;
+               break;
+              }
+            }
+             //fault condition
+            if(search == -1)
+            {
+              buffer[pointer] = reference[i];
+              fault++;
+              pointer++;
+              if(pointer == frames)
+               pointer = 0;
+            }
             for(int j = 0; j < frames; j++)
                 mem_layout[i][j] = buffer[j];
-        }        
+        }
         for(int i = 0; i < frames; i++)
         {
             for(int j = 0; j < ref_len; j++)

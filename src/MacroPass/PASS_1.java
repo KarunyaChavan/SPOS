@@ -86,6 +86,7 @@ public class PASS_1 {
 									MDT[mdt_cnt].stmnt += "\t" + words[i];
 									first = false;
 								} else MDT[mdt_cnt].stmnt += "\t," + words[i];
+
 								ARGLIST[arglist_cnt++] = new arglist(words[i]);
 								MNT[mnt_cnt - 1].arg_cnt++;
 							}

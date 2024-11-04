@@ -40,9 +40,6 @@ public class PriorityNP {
             process_queue[i] = new Process(pid, ar, br, pr);
         }
 
-        // Sort processes based on arrival time
-        Arrays.sort(process_queue, Comparator.comparingInt(p -> p.arrival_time));
-
         int currentTime = 0;
         int completedProcesses = 0;
         float total_tat = 0, total_wt = 0;

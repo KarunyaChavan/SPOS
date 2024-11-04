@@ -11,7 +11,7 @@ public class PassII {
         BufferedReader b3 = new BufferedReader(new FileReader("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\Assembler\\AssemblerPass2\\littab.txt"));
 
         //Creating file writer object
-        FileWriter fw = new FileWriter("P2.txt");
+        FileWriter fw = new FileWriter("E:\\Coding\\TE_SEM_V\\SPOS\\TE_SPOS\\src\\Assembler\\AssemblerPass2\\P2.txt");
 
         //Map the pointer and the symbol/literal addresses
         HashMap<Integer, String> symSymbol = new HashMap<Integer, String>();
