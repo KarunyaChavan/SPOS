@@ -81,7 +81,7 @@ public class PASS_1 {
 								ARGLIST[arglist_cnt-1].value = words[i+1];
 							}
 							if (words[i].matches("&[a-zA-Z]+") || words[i].matches("&[a-zA-Z]+[0-9]+")) {
-
+								//first comma sathi vaprly
 								if (first) {
 									MDT[mdt_cnt].stmnt += "\t" + words[i];
 									first = false;
@@ -113,6 +113,7 @@ public class PASS_1 {
 		 				}
 		 			}
 	 			}
+
 				else if(!line.contains("MEND"))
 					bw1.write(words[i]+"\t");
 	 		}
